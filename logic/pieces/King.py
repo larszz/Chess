@@ -15,7 +15,7 @@ class King(MovingChessPiece):
         self.sign = "♔"
 
 
-    def is_possible_move(self, move: Move) -> bool:
+    def is_valid_move_independent_from_capture(self, move: Move) -> bool:
         try:
             difference = move.get_difference()
             direction = difference.get_direction()

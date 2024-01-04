@@ -3,7 +3,7 @@ import unittest
 from logic.ChessBoard import ChessBoard
 from logic.ChessError import ChessError
 from logic.Color import Color
-from logic.BoardNavigation import Coordinate, ChessCoordinate
+from logic.BoardNavigation import Coordinate, ChessCoordinate, Move
 
 
 class TestChessboard(unittest.TestCase):
@@ -32,9 +32,9 @@ class TestChessboard(unittest.TestCase):
 
 
         with self.assertRaises(ChessError):
-            self.default_board.check_is_valid_move(ChessCoordinate('c1'), ChessCoordinate('d1'))
-            self.default_board.check_is_valid_move(ChessCoordinate('a1'), ChessCoordinate('b1'))
-            self.default_board.check_is_valid_move(ChessCoordinate('a1'), ChessCoordinate('h1'))
+            self.default_board.check_is_valid_move(Move(ChessCoordinate('c1'), ChessCoordinate('d1')))
+            self.default_board.check_is_valid_move(Move(ChessCoordinate('a1'), ChessCoordinate('b1')))
+            self.default_board.check_is_valid_move(Move(ChessCoordinate('a1'), ChessCoordinate('h1')))
 
 
     def test_has_piece_of_color_at(self):

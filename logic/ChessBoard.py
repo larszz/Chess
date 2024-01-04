@@ -1,6 +1,6 @@
 from logic.ChessError import ChessError
 from logic.Color import Color
-from logic.BoardNavigation import Coordinate
+from logic.BoardNavigation import Coordinate, Move
 from logic.pieces.Bishop import Bishop
 from logic.pieces.ChessPiece import ChessPiece
 from logic.pieces.King import King
@@ -60,23 +60,23 @@ class ChessBoard:
             self.put_starting_pieces_for_color(c)
 
 
-    def check_is_valid_move(self, from_coordinate: Coordinate, to_coordinate: Coordinate) -> bool:
+    def check_is_valid_move(self, move: Move) -> bool:
         # piece is movable
-        if not self.has_piece_at(from_coordinate):
-            raise ChessError(f"No piece at {from_coordinate}")
+        if not self.has_piece_at(move.from_coordinate):
+            raise ChessError(f"No piece at {move.from_coordinate}")
 
         # destination field is not blocked by own piece
-        piece_to_move = self.get_piece_at_coordinate(from_coordinate)
-        if self.has_piece_of_color_at(to_coordinate, piece_to_move.color):
-            raise ChessError(f"Piece of same color at {to_coordinate}")
+        piece_to_move = self.get_piece_at_coordinate(move.from_coordinate)
+        if self.has_piece_of_color_at(move.to_coordinate, piece_to_move.color):
+            raise ChessError(f"Piece of same color at {move.to_coordinate}")
 
         # piece can move there
-        if piece_to_move.is_impossible_move(from_coordinate, to_coordinate):
-            raise ChessError(f"Piece can not move from {from_coordinate} to {to_coordinate}")
+        if not piece_to_move.is_valid_move(move):
+            raise ChessError(f"Move {move} not possible")
 
         # no piece in the way
-        if self.has_pieces_at_coordinates(piece_to_move.get_moved_over_fields(from_coordinate, to_coordinate)):
-            raise ChessError(f"Pieces in the way between {from_coordinate} and {to_coordinate}")
+        if self.has_pieces_at_coordinates(piece_to_move.get_moved_over_fields(move)):
+            raise ChessError(f"Pieces in the way of move {move}")
 
         return True
 

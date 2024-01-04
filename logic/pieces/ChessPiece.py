@@ -45,16 +45,19 @@ class ChessPiece(ABC):
         return cls(Color.WHITE)
 
 
-    def is_possible_move(self, move: Move) -> bool:
+    def is_valid_move_independent_from_capture(self, move: Move) -> bool:
         raise NotImplementedError
 
 
     def is_valid_move_without_capture(self, move: Move) -> bool:
-        return self.is_possible_move(move)
+        return self.is_valid_move_independent_from_capture(move)
 
 
     def is_valid_move_with_capture(self, move: Move) -> bool:
-        return self.is_possible_move(move)
+        return self.is_valid_move_independent_from_capture(move)
+
+    def is_valid_move(self, move: Move) -> bool:
+        return self.is_valid_move_without_capture(move) or self.is_valid_move_with_capture(move)
 
 
     def is_invalid_move_without_capture(self, move: Move) -> bool:

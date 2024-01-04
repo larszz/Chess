@@ -15,6 +15,6 @@ class Queen(MovingChessPiece):
         self.sign = "♕"
 
 
-    def is_possible_move(self, move: Move) -> bool:
+    def is_valid_move_independent_from_capture(self, move: Move) -> bool:
         diff = move.get_difference()
         return diff.is_straight_direction() or diff.is_diagonal_direction()

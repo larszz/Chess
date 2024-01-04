@@ -15,7 +15,7 @@ class Knight(JumpingChessPiece):
         self.sign = "♘"
 
 
-    def is_possible_move(self, move: Move) -> bool:
+    def is_valid_move_independent_from_capture(self, move: Move) -> bool:
         difference: CoordinateDifference = move.get_difference()
         return ((difference.get_absolute_row_diff() == 2) and (difference.get_absolute_col_diff() == 1)) \
             or ((difference.get_absolute_row_diff() == 1) and (difference.get_absolute_col_diff() == 2))
