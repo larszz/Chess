@@ -28,8 +28,6 @@ class TestBishop(BaseChessTest):
 
             self.assertFalse(m(Move(start, Coordinate(1, 8))), f"Method {m} failed, should be False")
 
-            # TODO test absolute random position without direction
-
             self.assertFalse(m(Move(start, start)), f"Method {m} failed, should be False")
 
 

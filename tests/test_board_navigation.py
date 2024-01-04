@@ -32,17 +32,52 @@ class ChessTestCoordinateDifference(BaseChessTest):
         self.assertRaises(ChessError, CoordinateDifference(2, 1).get_direction)
 
 
+    def test_is_straight_direction(self):
+        self.assertTrue(CoordinateDifference(0, 1).is_straight_direction())
+        self.assertTrue(CoordinateDifference(0, 8).is_straight_direction())
+        self.assertTrue(CoordinateDifference(1, 0).is_straight_direction())
+        self.assertTrue(CoordinateDifference(8, 0).is_straight_direction())
+        self.assertTrue(CoordinateDifference(0, -1).is_straight_direction())
+        self.assertTrue(CoordinateDifference(0, -8).is_straight_direction())
+        self.assertTrue(CoordinateDifference(-1, 0).is_straight_direction())
+        self.assertTrue(CoordinateDifference(-8, 0).is_straight_direction())
+
+        self.assertFalse(CoordinateDifference(0, 0).is_straight_direction())
+        self.assertFalse(CoordinateDifference(1, 1).is_straight_direction())
+        self.assertFalse(CoordinateDifference(-1, -1).is_straight_direction())
+        self.assertFalse(CoordinateDifference(1, 3).is_straight_direction())
+        self.assertFalse(CoordinateDifference(-1, -3).is_straight_direction())
+
+
+    def test_is_diagonal_direction(self):
+        self.assertTrue(CoordinateDifference(1, 1).is_diagonal_direction())
+        self.assertTrue(CoordinateDifference(8, 8).is_diagonal_direction())
+        self.assertTrue(CoordinateDifference(-1, -1).is_diagonal_direction())
+        self.assertTrue(CoordinateDifference(-8, -8).is_diagonal_direction())
+
+        self.assertFalse(CoordinateDifference(0, 0).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(0, 1).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(0, 8).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(1, 0).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(8, 0).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(0, -1).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(0, -8).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-1, 0).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-8, 0).is_diagonal_direction())
+
+        self.assertFalse(CoordinateDifference(2, 1).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(2, 8).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(1, 2).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(8, 2).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-2, -1).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-2, -8).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-1, -2).is_diagonal_direction())
+        self.assertFalse(CoordinateDifference(-8, -2).is_diagonal_direction())
+
+
     def test_equality(self):
         self.assertEqual(CoordinateDifference(1, 1), CoordinateDifference(1, 1))
         self.assertNotEqual(CoordinateDifference(0, 0), CoordinateDifference(1, 1))
-
-
-    def test_fields_on_way(self):
-        start = Coordinate(3, 3)
-
-        # same row
-        same_row_up = Coordinate(1, 3)
-        # TODO
 
 
 class ChessTestCoordinates(BaseChessTest):
@@ -50,15 +85,15 @@ class ChessTestCoordinates(BaseChessTest):
     def test_creation(self):
         row = 1
         col = 5
-        coor = Coordinate(row, col)
-        self.assertEqual(coor.row, row, 'Row not matching')
-        self.assertEqual(coor.col, col, 'Col not matching')
+        coordinate = Coordinate(row, col)
+        self.assertEqual(coordinate.row, row, 'Row not matching')
+        self.assertEqual(coordinate.col, col, 'Col not matching')
 
 
     def test_distance(self):
-        coor_from = Coordinate(1, 1)
-        coor_to = Coordinate(5, 3)
-        distance = coor_from.get_difference_to_other(coor_to)
+        from_coordinate = Coordinate(1, 1)
+        to_coordinate = Coordinate(5, 3)
+        distance = from_coordinate.get_difference_to_other(to_coordinate)
         self.assertEqual(distance.row_diff, 4, 'Row distance not matching')
         self.assertEqual(distance.col_diff, 2, 'Col distance not matching')
 
